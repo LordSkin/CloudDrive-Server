@@ -9,7 +9,7 @@ public interface FileManager {
 
     List<File> getFilesList(String path);
 
-    void addFile(File f, String path);
+    void addFile(File f, String path, String name);
 
     void addDirectory(String name, String path);
 
