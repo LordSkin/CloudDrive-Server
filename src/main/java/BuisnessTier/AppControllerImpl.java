@@ -4,6 +4,7 @@ import DataTier.FileAcces.FileManager;
 import DataTier.FolderSerializer;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.inject.Inject;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -11,8 +12,10 @@ import java.util.List;
 
 public class AppControllerImpl implements AppController {
 
+    @Inject
     FileManager fileManager;
 
+    @Inject
     FolderSerializer serializer;
 
     public void setFileManager(FileManager fileManager) {
@@ -39,7 +42,7 @@ public class AppControllerImpl implements AppController {
     @Override
     public String getFolder(String path) {
         List<File> filesList = fileManager.getFilesList(pathDeserialize(path));
-        return  serializer.serialize(filesList);
+        return serializer.serialize(filesList);
     }
 
     @Override
@@ -77,7 +80,7 @@ public class AppControllerImpl implements AppController {
         }
     }
 
-    private String pathDeserialize(String path){
+    private String pathDeserialize(String path) {
         return path.replaceAll("%", File.separator);
     }
 }

@@ -18,7 +18,7 @@ public class AppControllerTests {
     private AppController testObject;
 
     @Before
-    public void prepare(){
+    public void prepare() {
         testObject = new AppControllerImpl();
 
         FileManager fileManager = Mockito.mock(FileManager.class);
@@ -32,86 +32,87 @@ public class AppControllerTests {
 
         FolderSerializer serializer = Mockito.mock(FolderSerializer.class);
 
-        ((AppControllerImpl)testObject).setFileManager(fileManager);
-        ((AppControllerImpl)testObject).setSerializer(serializer);
+        ((AppControllerImpl) testObject).setFileManager(fileManager);
+        ((AppControllerImpl) testObject).setSerializer(serializer);
     }
 
     @Test
-    public void addtest(){
-        try{
-            boolean result =  testObject.addFile(new MockMultipartFile("testFile", new byte[1]), "");
+    public void addtest() {
+        try {
+            boolean result = testObject.addFile(new MockMultipartFile("testFile", new byte[1]), "");
             Assert.assertTrue(result);
         }
-        catch (Exception e){
+        catch (Exception e) {
             Assert.fail();
         }
     }
 
     @Test
-    public void getTest(){
-        try{
-            File result =  testObject.getFile("testPath");
-            Assert.assertTrue(result!=null);
+    public void getTest() {
+        try {
+            File result = testObject.getFile("testPath");
+            Assert.assertTrue(result != null);
         }
-        catch (Exception e){
+        catch (Exception e) {
             Assert.fail();
         }
     }
 
     @Test
-    public void getListTest(){
-        try{
-            String result =  testObject.getFolder("testPath");
+    public void getListTest() {
+        try {
+            String result = testObject.getFolder("testPath");
         }
-        catch (Exception e){
+        catch (Exception e) {
             Assert.fail();
         }
     }
 
     @Test
-    public void deleteTest(){
-        try{
-            boolean result =  testObject.delete("testPath");
+    public void deleteTest() {
+        try {
+            boolean result = testObject.delete("testPath");
             Assert.assertTrue(result);
         }
-        catch (Exception e){
+        catch (Exception e) {
             Assert.fail();
         }
     }
 
     @Test
-    public void renameTest(){
-        try{
-            boolean result =  testObject.rename("testPath", "newTestName");
+    public void renameTest() {
+        try {
+            boolean result = testObject.rename("testPath", "newTestName");
             Assert.assertTrue(result);
         }
-        catch (Exception e){
+        catch (Exception e) {
             Assert.fail();
         }
     }
 
     @Test(expected = NullPointerException.class)
-    public void nullTestGet(){
+    public void nullTestGet() {
         testObject.getFile(null);
     }
 
     @Test(expected = NullPointerException.class)
-    public void nullTestAdd(){
-        testObject.addFile(null,null);
+    public void nullTestAdd() {
+        testObject.addFile(null, null);
     }
 
     @Test(expected = NullPointerException.class)
-    public void nullTestGetList(){
+    public void nullTestGetList() {
         testObject.getFolder(null);
     }
 
     @Test(expected = NullPointerException.class)
-    public void nullTestDelete(){
+    public void nullTestDelete() {
         testObject.delete(null);
     }
+
     @Test(expected = NullPointerException.class)
-    public void nullTestRename(){
-        testObject.rename(null,null);
+    public void nullTestRename() {
+        testObject.rename(null, null);
     }
 
 }
