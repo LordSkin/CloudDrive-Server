@@ -1,5 +1,6 @@
 package DataTier;
 
+import DataTier.DataModels.FileType;
 import com.google.gson.Gson;
 
 import java.io.File;
@@ -26,11 +27,12 @@ public class FileSerializer {
         List<FileDetails> detailsList = new ArrayList<FileDetails>();
         for (File f : files){
             if(f.isDirectory())detailsList.add(new FileDetails(FileType.Folder, f.getName()));
-            else if(extensionReader.getImageExtensions().contains(getExtension(f.getName()))) detailsList.add(new FileDetails(FileType.Image, f.getName()));
-            else if(extensionReader.getDocumentsExtensions().contains(getExtension(f.getName()))) detailsList.add(new FileDetails(FileType.TextFile, f.getName()));
-            else if(extensionReader.getProgramExtensions().contains(getExtension(f.getName()))) detailsList.add(new FileDetails(FileType.Program, f.getName()));
-            else if(extensionReader.getAudioExtensions().contains(getExtension(f.getName()))) detailsList.add(new FileDetails(FileType.Audio, f.getName()));
-            else detailsList.add(new FileDetails(FileType.Other, f.getName()));
+            else detailsList.add(new FileDetails(extensionReader.getExtensionsMap().getOrDefault(getExtension(f.getName()), FileType.Other), f.getName()));
+//            else if(extensionReader.getImageExtensions().contains(getExtension(f.getName()))) detailsList.add(new FileDetails(FileType.Image, f.getName()));
+//            else if(extensionReader.getDocumentsExtensions().contains(getExtension(f.getName()))) detailsList.add(new FileDetails(FileType.TextFile, f.getName()));
+//            else if(extensionReader.getProgramExtensions().contains(getExtension(f.getName()))) detailsList.add(new FileDetails(FileType.Program, f.getName()));
+//            else if(extensionReader.getAudioExtensions().contains(getExtension(f.getName()))) detailsList.add(new FileDetails(FileType.Audio, f.getName()));
+//            else detailsList.add(new FileDetails(FileType.Other, f.getName()));
         }
         return gson.toJson(detailsList);
     }
@@ -55,7 +57,5 @@ public class FileSerializer {
         }
     }
 
-    private enum FileType{
-        Image, TextFile, Program, Audio, Other, Folder
-    }
+
 }

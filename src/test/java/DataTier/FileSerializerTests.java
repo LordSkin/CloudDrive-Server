@@ -19,58 +19,42 @@ public class FileSerializerTests {
     private FileSerializer testObject;
 
     @Before
-    public void prepare(){
+    public void prepare() {
 
         testObject = new FileSerializer(new Gson());
 
         ExtensionReader extensionReader = Mockito.mock(ExtensionReader.class);
 
-        List<String> images, docs, audio, programs;
-
-        images = new ArrayList<String>();
-        images.add("jpg");
-        docs = new ArrayList<String>();
-        docs.add("txt");
-        audio = new ArrayList<String>();
-        audio.add("mp3");
-        programs = new ArrayList<String>();
-        programs.add("exe");
-
-        Mockito.when(extensionReader.getImageExtensions()).thenReturn(images);
-        Mockito.when(extensionReader.getAudioExtensions()).thenReturn(audio);
-        Mockito.when(extensionReader.getProgramExtensions()).thenReturn(programs);
-        Mockito.when(extensionReader.getDocumentsExtensions()).thenReturn(docs);
-
         testObject.setExtensionReader(extensionReader);
     }
 
     @Test
-    public void nullTest(){
-        try{
+    public void nullTest() {
+        try {
             testObject.serialize(null);
         }
-        catch (NullPointerException e){
+        catch (NullPointerException e) {
             //OK
         }
-        catch (Exception e){
+        catch (Exception e) {
             Assert.fail();
         }
     }
 
     @Test
-    public void emptyTest(){
-        try{
+    public void emptyTest() {
+        try {
             String result = testObject.serialize(new ArrayList<File>());
             Assert.assertEquals(result, "[]");
         }
-        catch (Exception e){
+        catch (Exception e) {
             Assert.fail();
         }
     }
 
     @Test
-    public void serializeTest(){
-        try{
+    public void serializeTest() {
+        try {
             List<File> files = new ArrayList<File>();
             File testFile = Mockito.mock(File.class);
             Mockito.when(testFile.isDirectory()).thenReturn(true);
@@ -81,14 +65,14 @@ public class FileSerializerTests {
 
             Assert.assertEquals(result, "[{\"fileType\":\"Folder\",\"name\":\"testName\"}]");
         }
-        catch (Exception e){
+        catch (Exception e) {
             Assert.fail();
         }
     }
 
     @Test
-    public void serializeTest2(){
-        try{
+    public void serializeTest2() {
+        try {
             List<File> files = new ArrayList<File>();
             File testFile = Mockito.mock(File.class);
             File testFile2 = Mockito.mock(File.class);
@@ -103,7 +87,7 @@ public class FileSerializerTests {
 
             Assert.assertEquals(result, "[{\"fileType\":\"Folder\",\"name\":\"testName\"},{\"fileType\":\"Other\",\"name\":\"testName2\"}]");
         }
-        catch (Exception e){
+        catch (Exception e) {
             Assert.fail();
         }
     }

@@ -42,11 +42,8 @@ public class ExtensionReaderTests {
     public void readingTest(){
         try{
             testObject = new ExtensionReader("extensions.txt");
-            Assert.assertEquals(4, testObject.getImageExtensions().size());
-            Assert.assertEquals(4, testObject.getDocumentsExtensions().size());
-            Assert.assertEquals(3, testObject.getAudioExtensions().size());
-            Assert.assertEquals(3, testObject.getProgramExtensions().size());
-            Assert.assertEquals("jpg", testObject.getImageExtensions().get(0));
+            Assert.assertEquals(14, testObject.getExtensionsMap().size());
+            Assert.assertTrue(testObject.getExtensionsMap().containsKey("jpg"));
         }
         catch (Exception e){
             Assert.fail();
