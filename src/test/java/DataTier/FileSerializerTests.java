@@ -4,10 +4,7 @@ import com.google.gson.Gson;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.Mockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -16,12 +13,12 @@ import java.util.List;
 
 public class FileSerializerTests {
 
-    private FileSerializer testObject;
+    private FolderSerializer testObject;
 
     @Before
     public void prepare() {
 
-        testObject = new FileSerializer(new Gson());
+        testObject = new FolderSerializer(new Gson(),File.separator+"home"+File.separator+"test");
 
         ExtensionReader extensionReader = Mockito.mock(ExtensionReader.class);
 
@@ -59,11 +56,12 @@ public class FileSerializerTests {
             File testFile = Mockito.mock(File.class);
             Mockito.when(testFile.isDirectory()).thenReturn(true);
             Mockito.when(testFile.getName()).thenReturn("testName");
+            Mockito.when(testFile.getAbsolutePath()).thenReturn(File.separator+"home"+File.separator+"test"+File.separator+"test1"+File.separator+"file"+File.separator+"testName");
             files.add(testFile);
 
             String result = testObject.serialize(files);
 
-            Assert.assertEquals(result, "[{\"fileType\":\"Folder\",\"name\":\"testName\"}]");
+            Assert.assertEquals(result, "[{\"fileType\":\"Folder\",\"name\":\"testName\",\"path\":\"%test1%file%testName\"}]");
         }
         catch (Exception e) {
             Assert.fail();
@@ -80,12 +78,14 @@ public class FileSerializerTests {
             Mockito.when(testFile.getName()).thenReturn("testName");
             Mockito.when(testFile2.isDirectory()).thenReturn(false);
             Mockito.when(testFile2.getName()).thenReturn("testName2");
+            Mockito.when(testFile.getAbsolutePath()).thenReturn(File.separator+"home"+File.separator+"test"+File.separator+"test1"+File.separator+"file"+File.separator+"testName");
+            Mockito.when(testFile2.getAbsolutePath()).thenReturn(File.separator+"home"+File.separator+"test"+File.separator+"test1"+File.separator+"file"+File.separator+"testName2");
             files.add(testFile);
             files.add(testFile2);
 
             String result = testObject.serialize(files);
 
-            Assert.assertEquals(result, "[{\"fileType\":\"Folder\",\"name\":\"testName\"},{\"fileType\":\"Other\",\"name\":\"testName2\"}]");
+            Assert.assertEquals(result, "[{\"fileType\":\"Folder\",\"name\":\"testName\",\"path\":\"%test1%file%testName\"},{\"fileType\":\"Other\",\"name\":\"testName2\",\"path\":\"%test1%file%testName2\"}]");
         }
         catch (Exception e) {
             Assert.fail();

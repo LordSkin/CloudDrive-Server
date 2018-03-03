@@ -9,7 +9,7 @@ import java.util.List;
 
 public interface FileManager {
 
-    File getFile(String path);
+    File getFile(String path) throws FileNotFoundException;
 
     List<File> getFilesList(String path);
 
@@ -18,5 +18,7 @@ public interface FileManager {
     void addDirectory(String path);
 
     void delete(String path) throws FileNotFoundException;
+
+    void rename(String path, String newName) throws IOException;
 
 }

@@ -14,12 +14,14 @@ public class FileManagerImpl implements FileManager {
     private String basePath;
 
     public FileManagerImpl(String basePath) {
-        this.basePath = basePath+"\\";
+        this.basePath = basePath+File.separator;
     }
 
     @Override
-    public File getFile(String path) {
+    public File getFile(String path) throws FileNotFoundException {
         if(path==null) throw new NullPointerException();
+        File result = new File(basePath+path);
+        if(!result.exists()) throw new FileNotFoundException();
         return new File(basePath+path);
     }
 
@@ -62,6 +64,14 @@ public class FileManagerImpl implements FileManager {
         else {
             throw new FileNotFoundException();
         }
+    }
+
+    @Override
+    public void rename(String path, String newName) throws IOException {
+        if(path==null) throw new NullPointerException();
+        File file = new File(path);
+        boolean success = file.renameTo(new File(newName));
+        if (!success) throw new IOException();
     }
 
     private void delete(File directory) {
