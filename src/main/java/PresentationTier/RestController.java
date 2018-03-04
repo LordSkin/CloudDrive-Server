@@ -105,7 +105,7 @@ public class RestController {
 
     @RequestMapping(value = "/{path}", method = RequestMethod.DELETE)
     @ResponseBody
-    public ResponseEntity<String> deleteFile(@PathVariable("path") String path) {
+    public ResponseEntity<String> deleteElement(@PathVariable("path") String path) {
         if (controller.delete(path)) {
             return ResponseEntity.ok("OK");
         }

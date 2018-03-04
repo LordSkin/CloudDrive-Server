@@ -16,7 +16,8 @@ public class Main {
 
         AppControllerImpl controller = (AppControllerImpl) AppControllerImpl.getAppController();
         try{
-            DaggerAppComponent.builder().controllerModule(new ControllerModule("BasePath","extensions.txt")).build().inject(controller);
+            File basePath = new File("basePath");
+            DaggerAppComponent.builder().controllerModule(new ControllerModule(basePath.getAbsolutePath()+File.separator,"extensions.txt")).build().inject(controller);
         }
         catch (FileNotFoundException e){
             System.out.println(e);

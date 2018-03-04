@@ -14,7 +14,7 @@ public class FileManagerImpl implements FileManager {
     private String basePath;
 
     public FileManagerImpl(String basePath) {
-        this.basePath = basePath + File.separator;
+        this.basePath = basePath;
         File baseFolder = new File(basePath);
         baseFolder.mkdirs();
         System.out.println("Folder path: "+baseFolder.getAbsolutePath());
@@ -31,11 +31,12 @@ public class FileManagerImpl implements FileManager {
     @Override
     public List<File> getFilesList(String path) throws FileNotFoundException {
         if (path == null) throw new NullPointerException();
-        String[] files = (new File(basePath + path)).list();
+        File baseFile = new File(basePath + path);
+        String[] files = baseFile.list();
         if(files==null) throw new FileNotFoundException();
         List<File> result = new ArrayList<File>();
         for (String file : files) {
-            result.add(new File(file));
+            result.add(new File(baseFile.getAbsolutePath()+File.separator+file));
         }
         return result;
     }
