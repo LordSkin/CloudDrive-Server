@@ -1,30 +1,25 @@
 package PresentationTier;
 
 import BuisnessTier.AppController;
-import Dagger.AppComponent;
-import Dagger.ControllerModule;
-import Dagger.DaggerAppComponent;
-import dagger.internal.DaggerCollections;
+import BuisnessTier.AppControllerImpl;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
-import javax.inject.Inject;
-import java.io.FileNotFoundException;
-import java.lang.reflect.Method;
+import java.io.*;
 
 @Controller
 @EnableAutoConfiguration
 public class RestController {
 
-    @Inject
     AppController controller;
 
     public RestController() {
-
+        controller = AppControllerImpl.getAppController();
     }
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
@@ -33,12 +28,91 @@ public class RestController {
         return "OK";
     }
 
-    @RequestMapping(value = "/{path}", method = RequestMethod.GET)
+    @RequestMapping(value = "/get/{path}", method = RequestMethod.GET)
     @ResponseBody
-    public String getItem(@PathVariable("path") String path) {
-        return "OK";
+    public ResponseEntity<InputStreamResource> getItem(@PathVariable("path") String path) {
+
+        try {
+            File result = controller.getFile(path);
+            InputStreamResource resource = new InputStreamResource(new FileInputStream(result));
+            return ResponseEntity.ok()
+                    .contentType(MediaType.MULTIPART_FORM_DATA)
+                    .contentLength(result.length())
+                    .body(resource);
+        }
+        catch (FileNotFoundException e) {
+            System.out.println("File not found: " + path);
+            return ResponseEntity.badRequest().body(null);
+        }
     }
 
+
+    @RequestMapping(value = "/list/{path}", method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity<String> getList(@PathVariable("path") String path) {
+        String result = null;
+        try {
+            result = controller.getFolder(path);
+            return ResponseEntity.ok()
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .body(result);
+        }
+        catch (FileNotFoundException e) {
+            System.out.println("Folder not found:" + path);
+            return ResponseEntity.notFound().build();
+        }
+
+    }
+
+    @RequestMapping(value = "/list/", method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity<String> getBaseList() {
+        try {
+            String result = controller.getFolder(".");
+            return ResponseEntity.ok()
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .body(result);
+        }
+        catch (FileNotFoundException e) {
+            System.out.println("Base folder not found:");
+            return ResponseEntity.notFound().build();
+        }
+
+    }
+
+
+    @RequestMapping(value = "/{path}", method = RequestMethod.POST)
+    @ResponseBody
+    public String addFile(@RequestParam("file") MultipartFile file, @PathVariable("path") String path) {
+        if (controller.addFile(file, path)) {
+            return "OK";
+        }
+        else {
+            return "NOT OK";
+        }
+    }
+
+    @RequestMapping(value = "/folder/{path}", method = RequestMethod.POST)
+    @ResponseBody
+    public String addFolder(@PathVariable("path") String path) {
+        if (controller.addDirectory(path)) {
+            return "OK";
+        }
+        else {
+            return "NOT OK";
+        }
+    }
+
+    @RequestMapping(value = "/{path}", method = RequestMethod.DELETE)
+    @ResponseBody
+    public ResponseEntity<String> deleteFile(@PathVariable("path") String path) {
+        if (controller.delete(path)) {
+            return ResponseEntity.ok("OK");
+        }
+        else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 
 
 }

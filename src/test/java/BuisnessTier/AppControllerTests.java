@@ -22,7 +22,12 @@ public class AppControllerTests {
         testObject = new AppControllerImpl();
 
         FileManager fileManager = Mockito.mock(FileManager.class);
-        Mockito.when(fileManager.getFilesList("testPath")).thenReturn(new ArrayList<File>());
+        try {
+            Mockito.when(fileManager.getFilesList("testPath")).thenReturn(new ArrayList<File>());
+        }
+        catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
         try {
             Mockito.when(fileManager.getFile("testPath")).thenReturn(new File("testFile"));
         }
@@ -92,7 +97,13 @@ public class AppControllerTests {
 
     @Test(expected = NullPointerException.class)
     public void nullTestGet() {
-        testObject.getFile(null);
+        try {
+            testObject.getFile(null);
+        }
+        catch (FileNotFoundException e) {
+            e.printStackTrace();
+            Assert.fail();
+        }
     }
 
     @Test(expected = NullPointerException.class)
@@ -102,7 +113,12 @@ public class AppControllerTests {
 
     @Test(expected = NullPointerException.class)
     public void nullTestGetList() {
-        testObject.getFolder(null);
+        try {
+            testObject.getFolder(null);
+        }
+        catch (FileNotFoundException e) {
+            Assert.fail();
+        }
     }
 
     @Test(expected = NullPointerException.class)

@@ -18,6 +18,15 @@ public class AppControllerImpl implements AppController {
     @Inject
     FolderSerializer serializer;
 
+    private static AppController singleton;
+
+    public static  AppController getAppController(){
+        if (singleton==null){
+            singleton = new AppControllerImpl();
+        }
+        return singleton;
+    }
+
     public void setFileManager(FileManager fileManager) {
         this.fileManager = fileManager;
     }
@@ -40,20 +49,20 @@ public class AppControllerImpl implements AppController {
     }
 
     @Override
-    public String getFolder(String path) {
+    public boolean addDirectory(String path) {
+            fileManager.addDirectory(pathDeserialize(path));
+            return true;
+    }
+
+    @Override
+    public String getFolder(String path) throws FileNotFoundException {
         List<File> filesList = fileManager.getFilesList(pathDeserialize(path));
         return serializer.serialize(filesList);
     }
 
     @Override
-    public File getFile(String path) {
-        try {
+    public File getFile(String path) throws FileNotFoundException {
             return fileManager.getFile(pathDeserialize(path));
-        }
-        catch (FileNotFoundException e) {
-            e.printStackTrace();
-            return null;
-        }
     }
 
     @Override
@@ -81,6 +90,6 @@ public class AppControllerImpl implements AppController {
     }
 
     private String pathDeserialize(String path) {
-        return path.replaceAll("%", File.separator);
+        return path.replace("&", File.separator);
     }
 }

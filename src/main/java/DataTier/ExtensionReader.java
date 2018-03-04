@@ -14,21 +14,21 @@ public class ExtensionReader {
 
         Scanner scanner = new Scanner(new File(fileName));
         Scanner sc = new Scanner(scanner.nextLine());
-        while(sc.hasNext()){
+        while (sc.hasNext()) {
             extensionsMap.put(sc.next(), FileType.Image);
         }
 
         sc = new Scanner(scanner.nextLine());
-        while(sc.hasNext()){
+        while (sc.hasNext()) {
             extensionsMap.put(sc.next(), FileType.TextFile);
         }
 
         sc = new Scanner(scanner.nextLine());
-        while(sc.hasNext()){
+        while (sc.hasNext()) {
             extensionsMap.put(sc.next(), FileType.Audio);
         }
         sc = new Scanner(scanner.nextLine());
-        while(sc.hasNext()){
+        while (sc.hasNext()) {
             extensionsMap.put(sc.next(), FileType.Program);
         }
     }

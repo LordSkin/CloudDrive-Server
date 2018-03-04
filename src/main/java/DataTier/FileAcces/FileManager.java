@@ -11,7 +11,7 @@ public interface FileManager {
 
     File getFile(String path) throws FileNotFoundException;
 
-    List<File> getFilesList(String path);
+    List<File> getFilesList(String path) throws FileNotFoundException;
 
     void addFile(MultipartFile f, String path) throws IOException;
 
