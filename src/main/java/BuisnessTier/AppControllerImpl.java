@@ -2,9 +2,10 @@ package BuisnessTier;
 
 import DataTier.FileAcces.FileManager;
 import DataTier.FolderSerializer;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.inject.Inject;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -12,25 +13,17 @@ import java.util.List;
 
 public class AppControllerImpl implements AppController {
 
-    @Inject
+
     FileManager fileManager;
 
-    @Inject
     FolderSerializer serializer;
 
-    private static AppController singleton;
-
-    public static  AppController getAppController(){
-        if (singleton==null){
-            singleton = new AppControllerImpl();
-        }
-        return singleton;
-    }
-
+    @Autowired
     public void setFileManager(FileManager fileManager) {
         this.fileManager = fileManager;
     }
 
+    @Autowired
     public void setSerializer(FolderSerializer serializer) {
         this.serializer = serializer;
     }

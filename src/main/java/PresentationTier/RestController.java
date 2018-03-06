@@ -2,24 +2,23 @@ package PresentationTier;
 
 import BuisnessTier.AppController;
 import BuisnessTier.AppControllerImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
 
-@Controller
-@EnableAutoConfiguration
+@org.springframework.web.bind.annotation.RestController
 public class RestController {
 
+    @Autowired
     AppController controller;
 
-    public RestController() {
-        controller = AppControllerImpl.getAppController();
+    public RestController(){
     }
 
     @RequestMapping(value = "/", method = RequestMethod.GET)

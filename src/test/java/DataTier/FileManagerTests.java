@@ -24,7 +24,7 @@ public class FileManagerTests {
         testDirectory = new File("testDirectory");
         System.out.println(testDirectory.getAbsolutePath());
         testDirectory.mkdir();
-        testObject = new FileManagerImpl(testDirectory.getName());
+        testObject = new FileManagerImpl(testDirectory.getName()+File.separator);
         testFile = new MockMultipartFile("testFile", new byte[1]);
     }
 

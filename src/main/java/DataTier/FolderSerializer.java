@@ -6,33 +6,32 @@ import com.google.gson.Gson;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class FolderSerializer {
 
     private Gson gson;
 
-    ExtensionReader extensionReader;
+    private Map<String, FileType> extensionMap;
 
     private String basePath;
 
-    public FolderSerializer(Gson gson, String basePath) {
+    public FolderSerializer(Gson gson, String basePath, Map<String, FileType> extensionMap) {
         this.gson = gson;
         this.basePath = basePath;
+        this.extensionMap = extensionMap;
     }
 
-    public void setExtensionReader(ExtensionReader extensionReader) {
-        this.extensionReader = extensionReader;
-    }
 
     public String serialize(List<File> files) {
 
 
         List<FileDetails> detailsList = new ArrayList<FileDetails>();
         for (File f : files) {
-            String path = f.getAbsolutePath().replace(basePath, "").replace(File.separator, "&");
+            String path = f.getAbsolutePath().replace(basePath, "").replace(File.separator, "%");
             if (f.isDirectory()) detailsList.add(new FileDetails(FileType.Folder, f.getName(), path));
             else
-                detailsList.add(new FileDetails(extensionReader.getExtensionsMap().getOrDefault(getExtension(f.getName()), FileType.Other), f.getName(), path));
+                detailsList.add(new FileDetails(extensionMap.getOrDefault(getExtension(f.getName()), FileType.Other), f.getName(), path));
         }
         return gson.toJson(detailsList);
     }

@@ -1,5 +1,6 @@
 package DataTier;
 
+import DataTier.DataModels.FileType;
 import com.google.gson.Gson;
 import org.junit.Assert;
 import org.junit.Before;
@@ -8,7 +9,9 @@ import org.mockito.Mockito;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 public class FileSerializerTests {
@@ -18,11 +21,14 @@ public class FileSerializerTests {
     @Before
     public void prepare() {
 
-        testObject = new FolderSerializer(new Gson(),File.separator+"home"+File.separator+"test");
+        Map<String, FileType> extensionMap = new HashMap<String, FileType>();
+        extensionMap.put("jpg", FileType.Image);
+        extensionMap.put("mp3", FileType.Audio);
+        extensionMap.put("doc", FileType.TextFile);
+        extensionMap.put("exe", FileType.Program);
 
-        ExtensionReader extensionReader = Mockito.mock(ExtensionReader.class);
+        testObject = new FolderSerializer(new Gson(),File.separator+"home"+File.separator+"test", extensionMap);
 
-        testObject.setExtensionReader(extensionReader);
     }
 
     @Test

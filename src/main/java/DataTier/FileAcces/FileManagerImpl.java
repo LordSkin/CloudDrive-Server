@@ -1,5 +1,8 @@
 package DataTier.FileAcces;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Repository;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -9,9 +12,11 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+@Repository
 public class FileManagerImpl implements FileManager {
 
-    private String basePath;
+    String basePath;
+
 
     public FileManagerImpl(String basePath) {
         this.basePath = basePath;
