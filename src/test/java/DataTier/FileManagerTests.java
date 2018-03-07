@@ -24,7 +24,7 @@ public class FileManagerTests {
         testDirectory = new File("testDirectory");
         System.out.println(testDirectory.getAbsolutePath());
         testDirectory.mkdir();
-        testObject = new FileManagerImpl(testDirectory.getName()+File.separator);
+        testObject = new FileManagerImpl(testDirectory.getName() + File.separator);
         testFile = new MockMultipartFile("testFile", new byte[1]);
     }
 
@@ -36,7 +36,7 @@ public class FileManagerTests {
 
     private void delete(File directory) {
 
-        if (directory.isFile()||directory.list().length == 0) {
+        if (directory.isFile() || directory.list().length == 0) {
             directory.delete();
         }
         else {
@@ -80,8 +80,8 @@ public class FileManagerTests {
     @Test
     public void getFileTest() {
         try {
-            testObject.addFile(testFile,"testFile1");
-            testObject.addFile(testFile,"testFile2");
+            testObject.addFile(testFile, "testFile1");
+            testObject.addFile(testFile, "testFile2");
             Assert.assertEquals(2, testDirectory.list().length);
         }
         catch (Exception e) {
@@ -121,7 +121,7 @@ public class FileManagerTests {
             testObject.delete(testFile.getName());
             Assert.fail();
         }
-        catch (FileNotFoundException e){
+        catch (FileNotFoundException e) {
             //OK
         }
         catch (Exception e) {
@@ -130,52 +130,52 @@ public class FileManagerTests {
     }
 
     @Test
-    public void listTest(){
-        try{
+    public void listTest() {
+        try {
             testObject.addFile(testFile, "testFile1");
             testObject.addFile(testFile, "testFile2");
             testObject.addFile(testFile, "testFile3");
             Assert.assertEquals(3, testDirectory.list().length);
         }
-        catch (Exception e){
+        catch (Exception e) {
             Assert.fail();
         }
     }
 
     @Test
-    public void deleDirectory(){
-        try{
+    public void deleDirectory() {
+        try {
             testObject.addDirectory("test1");
             testObject.delete("test1");
             Assert.assertEquals(0, testObject.getFilesList("").size());
         }
-        catch (Exception e){
+        catch (Exception e) {
             Assert.fail();
         }
     }
 
     @Test
-    public void testGetFileNull(){
-        try{
+    public void testGetFileNull() {
+        try {
             testObject.getFile(null);
             Assert.fail();
         }
-        catch (NullPointerException e){
+        catch (NullPointerException e) {
             //OK
         }
-        catch (Exception e){
+        catch (Exception e) {
             Assert.fail();
         }
     }
 
     @Test
-    public void testGetFile(){
-        try{
+    public void testGetFile() {
+        try {
             testObject.addFile(testFile, "testFile1");
             File file = testObject.getFile("testFile1");
             Assert.assertEquals("testFile1", file.getName());
         }
-        catch (Exception e){
+        catch (Exception e) {
             Assert.fail();
         }
     }
