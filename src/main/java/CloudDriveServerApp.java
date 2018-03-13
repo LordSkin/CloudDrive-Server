@@ -9,7 +9,10 @@ import PresentationTier.RestController;
 import com.google.gson.Gson;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.web.multipart.MultipartResolver;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
+import javax.servlet.MultipartConfigElement;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Map;
@@ -41,6 +44,19 @@ public class CloudDriveServerApp {
     @Bean
     public FolderSerializer getFolderSerializer() throws FileNotFoundException {
             return new FolderSerializer(new Gson(), path, extensionMap);
+    }
+
+    //@Bean
+    public MultipartResolver getMultipartResolver() {
+        CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver();
+        multipartResolver.setMaxUploadSize(10000000);
+        return multipartResolver;
+    }
+
+
+    @Bean
+    public MultipartConfigElement multipartConfigElement() {
+        return new MultipartConfigElement("");
     }
 
 

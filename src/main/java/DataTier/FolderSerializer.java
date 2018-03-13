@@ -1,5 +1,6 @@
 package DataTier;
 
+import DataTier.DataModels.FileDetails;
 import DataTier.DataModels.FileType;
 import com.google.gson.Gson;
 
@@ -46,17 +47,6 @@ public class FolderSerializer {
         return extension;
     }
 
-    private class FileDetails {
-        FileType fileType;
-        String name;
-        String path;
-
-        public FileDetails(FileType fileType, String name, String path) {
-            this.fileType = fileType;
-            this.name = name;
-            this.path = path;
-        }
-    }
 
 
 }

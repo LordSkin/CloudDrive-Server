@@ -10,9 +10,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.annotation.MultipartConfig;
 import java.io.*;
 
 @org.springframework.web.bind.annotation.RestController
+@MultipartConfig(maxFileSize = 10737418240L, maxRequestSize = 10737418240L, fileSizeThreshold = 52428800)
 public class RestController {
 
     @Autowired
@@ -80,7 +82,7 @@ public class RestController {
     }
 
 
-    @RequestMapping(value = "/{path}", method = RequestMethod.POST)
+    @RequestMapping(value = "/{path}", method = RequestMethod.POST, consumes = "multipart/form-data")
     @ResponseBody
     public String addFile(@RequestParam("file") MultipartFile file, @PathVariable("path") String path) {
         if (controller.addFile(file, path)) {

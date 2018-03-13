@@ -26,6 +26,10 @@ public class ConfReader {
 
         basePath = prefs.node("Settings").get("basePath", "SharedFolder");
 
+        if (!basePath.endsWith(File.separator)){
+            basePath+=File.separator;
+        }
+
         String extensions = prefs.node("Extensions").get("Image", "");
         Scanner sc = new Scanner(extensions);
         while (sc.hasNext()){
