@@ -31,7 +31,7 @@ public class FolderSerializer {
 
         List<FileDetails> detailsList = new ArrayList<FileDetails>();
         for (File f : files) {
-            String path = f.getAbsolutePath().replace(File.separator, fileSeparator);
+            String path = f.getAbsolutePath().replace(basePath,"").replace(File.separator, fileSeparator);
             if (f.isDirectory()) detailsList.add(new FileDetails(FileType.Folder, f.getName(), path));
             else
                 detailsList.add(new FileDetails(extensionMap.getOrDefault(getExtension(f.getName()), FileType.Other), f.getName(), path));
