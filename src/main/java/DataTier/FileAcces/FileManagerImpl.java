@@ -36,12 +36,16 @@ public class FileManagerImpl implements FileManager {
     @Override
     public List<File> getFilesList(String path) throws FileNotFoundException {
         if (path == null) throw new NullPointerException();
-        File baseFile = new File(basePath + path);
+        if (path.equals(".")){
+            path = basePath;
+        }
+        File baseFile = new File(path);
         String[] files = baseFile.list();
         if (files == null) throw new FileNotFoundException();
         List<File> result = new ArrayList<File>();
         for (String file : files) {
-            result.add(new File(baseFile.getAbsolutePath() + File.separator + file));
+            file=baseFile.getAbsolutePath()+File.separator + file;
+            result.add(new File(file));
         }
         return result;
     }
