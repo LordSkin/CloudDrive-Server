@@ -15,7 +15,7 @@ public interface FileManager {
 
     void addFile(MultipartFile f, String path) throws IOException;
 
-    void addDirectory(String path);
+    void addDirectory(String path) throws IOException;
 
     void delete(String path) throws FileNotFoundException;
 

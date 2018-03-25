@@ -56,9 +56,11 @@ public class FileManagerImpl implements FileManager {
     }
 
     @Override
-    public void addDirectory(String path) {
+    public void addDirectory(String path) throws IOException {
         if (path == null) throw new NullPointerException();
-        (new File(basePath + path)).mkdirs();
+        if(!(new File(basePath + path)).mkdirs()){
+            throw new IOException();
+        }
     }
 
     @Override

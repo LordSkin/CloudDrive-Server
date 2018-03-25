@@ -5,6 +5,8 @@ import DataTier.DataModels.FileType;
 import DataTier.FileAcces.FileManager;
 import DataTier.FileAcces.FileManagerImpl;
 import DataTier.FolderSerializer;
+import DataTier.Logs.Logger;
+import DataTier.Logs.LoggerImpl;
 import PresentationTier.RestController;
 import com.google.gson.Gson;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -15,6 +17,7 @@ import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import javax.servlet.MultipartConfigElement;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.Map;
 
 @SpringBootApplication(scanBasePackages = {"BuisnessTier", "PresentationTier"}, scanBasePackageClasses = {AppController.class, RestController.class})
@@ -23,9 +26,11 @@ public class CloudDriveServerApp {
 
     private String path;
     private Map<String, FileType> extensionMap;
+    private String logFile;
 
     public CloudDriveServerApp() throws IOException {
         ConfReader confReader = new ConfReader("conf.ini");
+        this.logFile = confReader.getLogFile();
         this.path = confReader.getBasePath();
         this.extensionMap = confReader.getExtensionMap();
 
@@ -34,6 +39,11 @@ public class CloudDriveServerApp {
     @Bean
     public AppController getAppController(){
         return new AppControllerImpl();
+    }
+
+    @Bean
+    public Logger getLogger() throws FileNotFoundException, UnsupportedEncodingException {
+        return new LoggerImpl(logFile);
     }
 
     @Bean

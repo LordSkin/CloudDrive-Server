@@ -17,6 +17,8 @@ public class ConfReader {
 
     private String basePath;
 
+    private String logFile;
+
     public ConfReader(String fileName) throws IOException {
 
         extensionMap = new HashMap<String, FileType>();
@@ -25,6 +27,7 @@ public class ConfReader {
         java.util.prefs.Preferences prefs = new IniPreferences(ini);
 
         basePath = prefs.node("Settings").get("basePath", "SharedFolder");
+        logFile = prefs.node("Settings").get("logFile", "logs.txt");
 
         if (!basePath.endsWith(File.separator)){
             basePath+=File.separator;
@@ -62,5 +65,9 @@ public class ConfReader {
 
     public String getBasePath() {
         return basePath;
+    }
+
+    public String getLogFile() {
+        return logFile;
     }
 }
