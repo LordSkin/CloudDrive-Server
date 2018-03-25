@@ -81,8 +81,8 @@ public class FileManagerImpl implements FileManager {
     @Override
     public void rename(String path, String newName) throws IOException {
         if (path == null) throw new NullPointerException();
-        File file = new File(path);
-        boolean success = file.renameTo(new File(newName));
+        File file = new File(basePath + path);
+        boolean success = file.renameTo(new File(basePath+newName));
         if (!success) throw new IOException();
     }
 

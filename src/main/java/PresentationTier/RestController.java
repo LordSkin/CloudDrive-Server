@@ -29,6 +29,8 @@ public class RestController {
         return "OK";
     }
 
+
+
     @RequestMapping(value = "/get/{path}", method = RequestMethod.GET)
     @ResponseBody
     public ResponseEntity<InputStreamResource> getItem(@PathVariable("path") String path) {
@@ -93,7 +95,7 @@ public class RestController {
         }
     }
 
-    @RequestMapping(value = "/folder/{path}", method = RequestMethod.POST)
+    @RequestMapping(value = "/folder/{path}", method = RequestMethod.GET)
     @ResponseBody
     public String addFolder(@PathVariable("path") String path) {
         if (controller.addDirectory(path)) {
@@ -108,6 +110,17 @@ public class RestController {
     @ResponseBody
     public ResponseEntity<String> deleteElement(@PathVariable("path") String path) {
         if (controller.delete(path)) {
+            return ResponseEntity.ok("OK");
+        }
+        else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @RequestMapping(value = "/rename/{path}/{newName}", method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity<String> rename(@PathVariable("path") String path, @PathVariable("newName") String newName){
+        if (controller.rename(path, newName)){
             return ResponseEntity.ok("OK");
         }
         else {
