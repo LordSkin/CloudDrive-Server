@@ -81,26 +81,32 @@ public class LoggerImpl implements Logger {
     }
 
     private void write(String s) {
-        if (!isWriting){
-            try{
-                isWriting = true;
+        new Runnable(){
+            @Override
+            public void run() {
+                if (!isWriting){
+                    try{
+                        isWriting = true;
 
-                for (String string : pending){
-                    pw.println(string);
+                        for (String string : pending){
+                            pw.println(string);
+                        }
+                        pw.println(s);
+                        pw.flush();
+                    }
+                    catch (Exception e){
+                        e.printStackTrace();
+                    }
+                    finally {
+                        isWriting = false;
+                    }
                 }
-                pw.println(s);
-                pw.flush();
+                else {
+                    pending.add(s);
+                }
             }
-            catch (Exception e){
-                e.printStackTrace();
-            }
-            finally {
-                isWriting = false;
-            }
-        }
-        else {
-            pending.add(s);
-        }
+        }.run();
+
 
     }
 }
