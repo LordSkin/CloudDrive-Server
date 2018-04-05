@@ -7,11 +7,14 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.accept.MappingMediaTypeFileExtensionResolver;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.activation.MimetypesFileTypeMap;
 import javax.servlet.annotation.MultipartConfig;
 import java.io.*;
+import java.net.URLConnection;
 
 @org.springframework.web.bind.annotation.RestController
 @MultipartConfig(maxFileSize = 10737418240L, maxRequestSize = 10737418240L, fileSizeThreshold = 52428800)
@@ -20,8 +23,13 @@ public class RestController {
     @Autowired
     AppController controller;
 
+    @Autowired
+    MimetypesFileTypeMap mimeTypesMap;
+
     public RestController(){
     }
+
+
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     @ResponseBody
@@ -37,9 +45,11 @@ public class RestController {
 
         try {
             File result = controller.getFile(path);
+            String mime = mimeTypesMap.getContentType(result);
+
             InputStreamResource resource = new InputStreamResource(new FileInputStream(result));
             return ResponseEntity.ok()
-                    .contentType(MediaType.MULTIPART_FORM_DATA)
+                    .contentType(MediaType.parseMediaType(mime))
                     .contentLength(result.length())
                     .body(resource);
         }

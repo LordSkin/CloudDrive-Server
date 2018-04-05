@@ -14,6 +14,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.web.multipart.MultipartResolver;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
+import javax.activation.MimetypesFileTypeMap;
 import javax.servlet.MultipartConfigElement;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -54,6 +55,13 @@ public class CloudDriveServerApp {
     @Bean
     public FolderSerializer getFolderSerializer() throws FileNotFoundException {
             return new FolderSerializer(new Gson(), path, extensionMap);
+    }
+
+    @Bean
+    public MimetypesFileTypeMap getMimeTyPMap(){
+        MimetypesFileTypeMap result = new MimetypesFileTypeMap();
+        result.addMimeTypes("application/pdf pdf");
+        return result;
     }
 
     //@Bean
