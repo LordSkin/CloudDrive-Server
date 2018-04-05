@@ -5,6 +5,7 @@ import BuisnessTier.AppControllerImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.accept.MappingMediaTypeFileExtensionResolver;
@@ -49,6 +50,7 @@ public class RestController {
 
             InputStreamResource resource = new InputStreamResource(new FileInputStream(result));
             return ResponseEntity.ok()
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "filename=" + result.getName())
                     .contentType(MediaType.parseMediaType(mime))
                     .contentLength(result.length())
                     .body(resource);
