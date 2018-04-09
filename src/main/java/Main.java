@@ -1,3 +1,4 @@
+import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.boot.SpringApplication;
 import org.springframework.context.ApplicationContext;
 

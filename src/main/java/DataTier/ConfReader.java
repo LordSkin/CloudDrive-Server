@@ -19,6 +19,10 @@ public class ConfReader {
 
     private String logFile;
 
+    private String userName;
+
+    private String password;
+
     public ConfReader(String fileName) throws IOException {
 
         extensionMap = new HashMap<String, FileType>();
@@ -28,6 +32,9 @@ public class ConfReader {
 
         basePath = prefs.node("Settings").get("basePath", "SharedFolder");
         logFile = prefs.node("Settings").get("logFile", "logs.txt");
+
+        userName = prefs.node("Seciurity").get("user", "user");
+        password = prefs.node("Seciurity").get("password", "pass");
 
         if (!basePath.endsWith(File.separator)){
             basePath+=File.separator;
@@ -69,5 +76,13 @@ public class ConfReader {
 
     public String getLogFile() {
         return logFile;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public String getPassword() {
+        return password;
     }
 }

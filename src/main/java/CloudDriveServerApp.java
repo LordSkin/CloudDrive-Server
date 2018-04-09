@@ -21,19 +21,23 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.Map;
 
-@SpringBootApplication(scanBasePackages = {"BuisnessTier", "PresentationTier"}, scanBasePackageClasses = {AppController.class, RestController.class})
+@SpringBootApplication(scanBasePackages = {"BuisnessTier", "PresentationTier", "Seciurity"}, scanBasePackageClasses = {AppController.class, RestController.class})
 public class CloudDriveServerApp {
 
 
     private String path;
     private Map<String, FileType> extensionMap;
     private String logFile;
+    private String user;
+    private String password;
 
     public CloudDriveServerApp() throws IOException {
         ConfReader confReader = new ConfReader("conf.ini");
         this.logFile = confReader.getLogFile();
         this.path = confReader.getBasePath();
         this.extensionMap = confReader.getExtensionMap();
+        this.user =  confReader.getUserName();
+        this.password = confReader.getPassword();
 
     }
 
@@ -47,6 +51,16 @@ public class CloudDriveServerApp {
         return new LoggerImpl(logFile);
     }
 
+    @Bean(name = "userName")
+    public String getUser() {
+        return user;
+    }
+
+    @Bean(name = "password")
+    public String getPassword() {
+        return password;
+    }
+
     @Bean
     public FileManager getFileManager(){
         return new FileManagerImpl(path);
@@ -56,6 +70,7 @@ public class CloudDriveServerApp {
     public FolderSerializer getFolderSerializer() throws FileNotFoundException {
             return new FolderSerializer(new Gson(), path, extensionMap);
     }
+
 
     @Bean
     public MimetypesFileTypeMap getMimeTyPMap(){

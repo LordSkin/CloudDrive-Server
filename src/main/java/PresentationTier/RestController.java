@@ -8,12 +8,13 @@ import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.accept.MappingMediaTypeFileExtensionResolver;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.activation.MimetypesFileTypeMap;
 import javax.servlet.annotation.MultipartConfig;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.io.*;
 import java.net.URLConnection;
 
@@ -27,9 +28,9 @@ public class RestController {
     @Autowired
     MimetypesFileTypeMap mimeTypesMap;
 
-    public RestController(){
-    }
 
+    public RestController() {
+    }
 
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
@@ -50,12 +51,11 @@ public class RestController {
 
             InputStreamResource resource = new InputStreamResource(new FileInputStream(result));
             return ResponseEntity.ok()
-                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + result.getName()+"\"")
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + result.getName() + "\"")
                     .contentType(MediaType.parseMediaType(mime))
                     .contentLength(result.length())
                     .body(resource);
-        }
-        catch (FileNotFoundException e) {
+        } catch (FileNotFoundException e) {
             System.out.println("File not found: " + path);
             return ResponseEntity.badRequest().body(null);
         }
@@ -71,8 +71,7 @@ public class RestController {
             return ResponseEntity.ok()
                     .contentType(MediaType.APPLICATION_JSON)
                     .body(result);
-        }
-        catch (FileNotFoundException e) {
+        } catch (FileNotFoundException e) {
             System.out.println("Folder not found:" + path);
             return ResponseEntity.notFound().build();
         }
@@ -87,8 +86,7 @@ public class RestController {
             return ResponseEntity.ok()
                     .contentType(MediaType.APPLICATION_JSON)
                     .body(result);
-        }
-        catch (FileNotFoundException e) {
+        } catch (FileNotFoundException e) {
             System.out.println("Base folder not found:");
             return ResponseEntity.notFound().build();
         }
@@ -101,8 +99,7 @@ public class RestController {
     public String addFile(@RequestParam("file") MultipartFile file, @PathVariable("path") String path) {
         if (controller.addFile(file, path)) {
             return "OK";
-        }
-        else {
+        } else {
             return "NOT OK";
         }
     }
@@ -112,8 +109,7 @@ public class RestController {
     public String addFolder(@PathVariable("path") String path) {
         if (controller.addDirectory(path)) {
             return "OK";
-        }
-        else {
+        } else {
             return "NOT OK";
         }
     }
@@ -123,19 +119,17 @@ public class RestController {
     public ResponseEntity<String> deleteElement(@PathVariable("path") String path) {
         if (controller.delete(path)) {
             return ResponseEntity.ok("OK");
-        }
-        else {
+        } else {
             return ResponseEntity.notFound().build();
         }
     }
 
     @RequestMapping(value = "/rename/{path}/{newName}", method = RequestMethod.GET)
     @ResponseBody
-    public ResponseEntity<String> rename(@PathVariable("path") String path, @PathVariable("newName") String newName){
-        if (controller.rename(path, newName)){
+    public ResponseEntity<String> rename(@PathVariable("path") String path, @PathVariable("newName") String newName) {
+        if (controller.rename(path, newName)) {
             return ResponseEntity.ok("OK");
-        }
-        else {
+        } else {
             return ResponseEntity.notFound().build();
         }
     }
