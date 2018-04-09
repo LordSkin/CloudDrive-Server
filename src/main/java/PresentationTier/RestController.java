@@ -50,7 +50,7 @@ public class RestController {
 
             InputStreamResource resource = new InputStreamResource(new FileInputStream(result));
             return ResponseEntity.ok()
-                    .header(HttpHeaders.CONTENT_DISPOSITION, "filename=" + result.getName())
+                    .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + result.getName()+"\"")
                     .contentType(MediaType.parseMediaType(mime))
                     .contentLength(result.length())
                     .body(resource);
