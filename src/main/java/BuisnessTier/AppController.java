@@ -15,10 +15,12 @@ public interface AppController {
 
     String getFolder(String path) throws FileNotFoundException;
 
-    File getFile(String path) throws FileNotFoundException;
+    File getFile(String path, String token) throws FileNotFoundException;
 
     boolean delete(String path);
 
     boolean rename(String path, String newName);
+
+    String getToken(String path);
 
 }

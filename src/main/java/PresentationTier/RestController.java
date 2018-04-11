@@ -41,12 +41,12 @@ public class RestController {
 
 
 
-    @RequestMapping(value = "/get/{path}", method = RequestMethod.GET)
+    @RequestMapping(value = "/get/{path}/{token}", method = RequestMethod.GET)
     @ResponseBody
-    public ResponseEntity<InputStreamResource> getItem(@PathVariable("path") String path) {
+    public ResponseEntity<InputStreamResource> getItem(@PathVariable("path") String path, @PathVariable("token") String token) {
 
         try {
-            File result = controller.getFile(path);
+            File result = controller.getFile(path, token);
             String mime = mimeTypesMap.getContentType(result);
 
             InputStreamResource resource = new InputStreamResource(new FileInputStream(result));
@@ -75,14 +75,22 @@ public class RestController {
             System.out.println("Folder not found:" + path);
             return ResponseEntity.notFound().build();
         }
+    }
 
+    @RequestMapping(value = "/token/{path}", method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity<String> askForFileToken(@PathVariable("path")String path){
+        String result = controller.getToken(path);
+        return ResponseEntity.ok()
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(result);
     }
 
     @RequestMapping(value = "/list/", method = RequestMethod.GET)
     @ResponseBody
     public ResponseEntity<String> getBaseList() {
         try {
-            String result = controller.getFolder(".");
+            String result = controller.getFolder("");
             return ResponseEntity.ok()
                     .contentType(MediaType.APPLICATION_JSON)
                     .body(result);

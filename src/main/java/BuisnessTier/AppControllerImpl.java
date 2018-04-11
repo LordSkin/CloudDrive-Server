@@ -3,6 +3,7 @@ package BuisnessTier;
 import DataTier.FileAcces.FileManager;
 import DataTier.FolderSerializer;
 import DataTier.Logs.Logger;
+import Seciurity.DownloadTokenManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -20,6 +21,13 @@ public class AppControllerImpl implements AppController {
     FolderSerializer serializer;
 
     Logger logger;
+
+    DownloadTokenManager tokenManager;
+
+    @Autowired
+    public void setTokenManager(DownloadTokenManager tokenManager) {
+        this.tokenManager = tokenManager;
+    }
 
     @Autowired
     public void setLogger(Logger logger) {
@@ -70,10 +78,16 @@ public class AppControllerImpl implements AppController {
     }
 
     @Override
-    public File getFile(String path) throws FileNotFoundException {
+    public File getFile(String path, String token) throws FileNotFoundException {
+        if(tokenManager.isTokenValid(path, token)){
             File result =  fileManager.getFile(pathDeserialize(path));
             logger.logDownloadedFile(path);
             return result;
+        }
+        else {
+            throw new FileNotFoundException();
+        }
+
     }
 
     @Override
@@ -100,6 +114,11 @@ public class AppControllerImpl implements AppController {
             e.printStackTrace();
             return false;
         }
+    }
+
+    @Override
+    public String getToken(String path) {
+        return tokenManager.getToken(path);
     }
 
     private String pathDeserialize(String path) {

@@ -55,7 +55,7 @@ public class AppControllerTests {
     @Test
     public void getTest() {
         try {
-            File result = testObject.getFile("testPath");
+            File result = testObject.getFile("testPath", "testToken");
             Assert.assertTrue(result != null);
         }
         catch (Exception e) {
@@ -98,7 +98,7 @@ public class AppControllerTests {
     @Test(expected = NullPointerException.class)
     public void nullTestGet() {
         try {
-            testObject.getFile(null);
+            testObject.getFile(null, null);
         }
         catch (FileNotFoundException e) {
             e.printStackTrace();
