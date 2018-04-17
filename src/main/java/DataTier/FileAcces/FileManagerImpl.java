@@ -66,8 +66,9 @@ public class FileManagerImpl implements FileManager {
 
     @Override
     public void delete(String path) throws FileNotFoundException {
+
         if (path == null) throw new NullPointerException();
-        File file = new File(basePath + path);
+        File file = new File(basePath + File.separator + path);
         if (file.isFile()) {
             file.delete();
         }
