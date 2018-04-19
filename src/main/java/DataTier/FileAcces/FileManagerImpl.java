@@ -32,9 +32,18 @@ public class FileManagerImpl implements FileManager {
     @Override
     public File getFile(String path) throws FileNotFoundException {
         if (path == null) throw new NullPointerException();
-        File result = new File(basePath + path);
-        if (!result.exists()) throw new FileNotFoundException();
-        return new File(basePath + path);
+        File result;
+        if(path.contains(File.separator)){
+            result = new File(basePath + path);
+            if (!result.exists()) throw new FileNotFoundException();
+            return new File(basePath + path);
+        }
+        else {
+            result = new File(basePath + File.separator + path);
+            if (!result.exists()) throw new FileNotFoundException();
+            return new File(basePath + File.separator + path);
+        }
+
     }
 
     @Override
@@ -54,7 +63,14 @@ public class FileManagerImpl implements FileManager {
     public void addFile(MultipartFile file, String path) throws IOException {
         if (path == null && file == null) throw new NullPointerException();
         byte[] bytes = file.getBytes();
-        FileOutputStream out = new FileOutputStream(new File(basePath + path));
+        FileOutputStream out;
+        if(path.contains(File.separator)){
+            out = new FileOutputStream(new File(basePath + path));
+        }
+        else {
+            out = new FileOutputStream(new File(basePath + File.separator + path));
+        }
+
         out.write(bytes);
         out.close();
     }

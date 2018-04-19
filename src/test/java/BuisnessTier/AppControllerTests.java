@@ -2,6 +2,8 @@ package BuisnessTier;
 
 import DataTier.FileAcces.FileManager;
 import DataTier.FolderSerializer;
+import DataTier.Logs.Logger;
+import Seciurity.DownloadTokenManager;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -36,9 +38,12 @@ public class AppControllerTests {
         }
 
         FolderSerializer serializer = Mockito.mock(FolderSerializer.class);
-
+        DownloadTokenManager tokenManager = Mockito.mock(DownloadTokenManager.class);
+        Mockito.when(tokenManager.isTokenValid(Mockito.any(), Mockito.any())).thenReturn(true);
         ((AppControllerImpl) testObject).setFileManager(fileManager);
+        ((AppControllerImpl) testObject).setTokenManager(tokenManager);
         ((AppControllerImpl) testObject).setSerializer(serializer);
+        ((AppControllerImpl) testObject).setLogger(Mockito.mock(Logger.class));
     }
 
     @Test

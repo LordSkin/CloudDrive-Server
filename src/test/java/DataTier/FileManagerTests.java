@@ -70,7 +70,7 @@ public class FileManagerTests {
     public void addTest1() {
         try {
             testObject.addFile(testFile, "filetest");
-            if (testObject.getFilesList("").size() <= 0) Assert.fail();
+            if (testObject.getFilesList("").size() != 1) Assert.fail();
         }
         catch (Exception e) {
             Assert.fail();

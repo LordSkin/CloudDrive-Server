@@ -67,7 +67,7 @@ public class FileSerializerTests {
 
             String result = testObject.serialize(files);
 
-            Assert.assertEquals(result, "[{\"fileType\":\"Folder\",\"name\":\"testName\",\"path\":\"%test1%file%testName\"}]");
+            Assert.assertEquals(result, "[{\"fileType\":\"Folder\",\"name\":\"testName\",\"path\":\"\\u0026test1\\u0026file\\u0026testName\"}]");
         }
         catch (Exception e) {
             Assert.fail();
@@ -91,7 +91,7 @@ public class FileSerializerTests {
 
             String result = testObject.serialize(files);
 
-            Assert.assertEquals(result, "[{\"fileType\":\"Folder\",\"name\":\"testName\",\"path\":\"%test1%file%testName\"},{\"fileType\":\"Other\",\"name\":\"testName2\",\"path\":\"%test1%file%testName2\"}]");
+            Assert.assertEquals(result, "[{\"fileType\":\"Folder\",\"name\":\"testName\",\"path\":\"\\u0026test1\\u0026file\\u0026testName\"},{\"fileType\":\"Other\",\"name\":\"testName2\",\"path\":\"\\u0026test1\\u0026file\\u0026testName2\"}]");
         }
         catch (Exception e) {
             Assert.fail();
