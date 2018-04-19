@@ -1,4 +1,4 @@
-package Seciurity;
+package BuisnessTier.Seciurity;
 
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.www.BasicAuthenticationEntryPoint;

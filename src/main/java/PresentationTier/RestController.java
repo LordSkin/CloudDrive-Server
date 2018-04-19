@@ -31,18 +31,11 @@ public class RestController {
     @Autowired
     MimetypesFileTypeMap mimeTypesMap;
 
-
-    public RestController() {
-    }
-
-
     @RequestMapping(value = "/", method = RequestMethod.GET)
     @ResponseBody
     public String ping() {
         return "OK";
     }
-
-
 
     @RequestMapping(value = "/get/{path}/{token}", method = RequestMethod.GET)
     @ResponseBody
@@ -115,7 +108,7 @@ public class RestController {
         }
     }
 
-    @RequestMapping(value = "/folder/{path}", method = RequestMethod.GET)
+    @RequestMapping(value = "/folder/{path}", method = RequestMethod.POST)
     @ResponseBody
     public ResponseEntity<String> addFolder(@PathVariable("path") String path) {
         if (controller.addDirectory(path)) {
@@ -135,7 +128,7 @@ public class RestController {
         }
     }
 
-    @RequestMapping(value = "/rename/{path}/{newName}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{path}/{newName}", method = RequestMethod.PUT)
     @ResponseBody
     public ResponseEntity<String> rename(@PathVariable("path") String path, @PathVariable("newName") String newName) {
         if (controller.rename(path, newName)) {

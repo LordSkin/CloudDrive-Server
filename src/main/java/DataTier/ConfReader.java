@@ -5,7 +5,6 @@ import org.ini4j.Ini;
 import org.ini4j.IniPreferences;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -36,8 +35,8 @@ public class ConfReader {
         basePath = prefs.node("Settings").get("basePath", "SharedFolder");
         logFile = prefs.node("Settings").get("logFile", "logs.txt");
 
-        userName = prefs.node("Seciurity").get("user", "user");
-        password = prefs.node("Seciurity").get("password", "pass");
+        userName = prefs.node("BuisnessTier/Seciurity").get("user", "user");
+        password = prefs.node("BuisnessTier/Seciurity").get("password", "pass");
 
         if (!basePath.endsWith(File.separator)){
             basePath+=File.separator;

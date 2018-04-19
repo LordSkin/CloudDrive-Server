@@ -26,7 +26,6 @@ public class FileManagerImpl implements FileManager {
         File baseFolder = new File(basePath);
         baseFolder.mkdirs();
         this.basePath = baseFolder.getAbsolutePath();
-        System.out.println("Folder path: " + baseFolder.getAbsolutePath());
     }
 
     @Override
@@ -103,7 +102,7 @@ public class FileManagerImpl implements FileManager {
     public void rename(String path, String newName) throws IOException {
         if (path == null) throw new NullPointerException();
         File file = new File(basePath + path);
-        boolean success = file.renameTo(new File(basePath+newName));
+        boolean success = file.renameTo(new File(basePath+File.separator+newName));
         if (!success) throw new IOException();
     }
 
