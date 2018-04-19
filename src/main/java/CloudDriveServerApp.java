@@ -23,6 +23,9 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.Map;
 
+/**
+ * Factory cerating important objects in app
+ */
 @SpringBootApplication(scanBasePackages = {"BuisnessTier", "PresentationTier", "Seciurity"}, scanBasePackageClasses = {AppController.class, RestController.class})
 public class CloudDriveServerApp {
 

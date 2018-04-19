@@ -7,6 +7,9 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * DAO for files. Provides basic CRUD operations
+ */
 public interface FileManager {
 
     File getFile(String path) throws FileNotFoundException;

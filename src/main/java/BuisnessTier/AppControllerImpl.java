@@ -13,6 +13,9 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * Controller implementation, includes all buisness logic
+ */
 public class AppControllerImpl implements AppController {
 
 

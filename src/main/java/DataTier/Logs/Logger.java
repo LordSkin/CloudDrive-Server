@@ -2,6 +2,9 @@ package DataTier.Logs;
 
 import java.io.File;
 
+/**
+ * Interface for login events of file operations
+ */
 public interface Logger {
 
     void logAddedFile(String path);

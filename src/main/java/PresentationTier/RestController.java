@@ -18,6 +18,9 @@ import javax.servlet.http.HttpSession;
 import java.io.*;
 import java.net.URLConnection;
 
+/**
+ * Rest controller, automaticaly wired by Spring. each method respond to one request.
+ */
 @org.springframework.web.bind.annotation.RestController
 @MultipartConfig(maxFileSize = 10737418240L, maxRequestSize = 10737418240L, fileSizeThreshold = 52428800)
 public class RestController {

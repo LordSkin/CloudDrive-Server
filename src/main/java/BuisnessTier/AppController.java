@@ -6,6 +6,9 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.FileNotFoundException;
 
+/**
+ * Controller interface for app
+ */
 public interface AppController {
 
 

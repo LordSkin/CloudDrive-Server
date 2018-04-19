@@ -1,5 +1,8 @@
 package DataTier.DataModels;
 
+/**
+ * data model representing most important informations about file
+ */
 public class FileDetails {
     FileType fileType;
     String name;

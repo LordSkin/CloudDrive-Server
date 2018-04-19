@@ -11,6 +11,9 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.Queue;
 
+/**
+ * Implementation of Logger. Writes events to file selected by filename
+ */
 public class LoggerImpl implements Logger {
 
 

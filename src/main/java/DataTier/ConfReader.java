@@ -11,6 +11,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
+/**
+ * Reading configuratuion from configuration file .ini
+ */
 public class ConfReader {
 
     private Map<String, FileType> extensionMap;

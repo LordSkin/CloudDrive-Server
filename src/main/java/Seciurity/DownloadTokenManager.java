@@ -4,6 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
+/**
+ * Creating and veryfying tokens for mdownloading files
+ */
 public class DownloadTokenManager {
 
     private Map<String, String> fileTokens;
@@ -16,12 +19,12 @@ public class DownloadTokenManager {
         random = new Random();
     }
 
-    public boolean isTokenValid(String file, String token){
+    public boolean isTokenValid(String file, String token) {
         return fileTokens.containsKey(file) && fileTokens.get(file).equals(token);
     }
 
-    public String getToken(String file){
-        if(fileTokens.containsKey(file)){
+    public String getToken(String file) {
+        if (fileTokens.containsKey(file)) {
             return fileTokens.get(file);
         }
         else {
@@ -31,9 +34,9 @@ public class DownloadTokenManager {
         }
     }
 
-    private String getRandomString(){
+    private String getRandomString() {
         StringBuilder salt = new StringBuilder();
-        while (salt.length() < 18) { // length of the random string.
+        while (salt.length() < 18) {
             int index = (int) (random.nextFloat() * chars.length());
             salt.append(chars.charAt(index));
         }

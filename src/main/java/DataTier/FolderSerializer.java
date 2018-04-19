@@ -9,6 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Serializing list of files to FileDetails, including recognision of fiel types
+ */
 public class FolderSerializer {
 
     private Gson gson;

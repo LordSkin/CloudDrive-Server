@@ -12,6 +12,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Implementation of FileManager. Uses files form path from local drives. Supports also windows and linux
+ */
 @Repository
 public class FileManagerImpl implements FileManager {
 
