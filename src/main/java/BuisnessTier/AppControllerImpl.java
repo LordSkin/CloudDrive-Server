@@ -3,7 +3,7 @@ package BuisnessTier;
 import DataTier.FileAcces.FileManager;
 import DataTier.FolderSerializer;
 import DataTier.Logs.Logger;
-import BuisnessTier.Seciurity.DownloadTokenManager;
+import BuisnessTier.Security.DownloadTokenManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -120,6 +120,7 @@ public class AppControllerImpl implements AppController {
 
     @Override
     public String getToken(String path) {
+        if (path==null) throw new NullPointerException();
         return tokenManager.getToken(path);
     }
 

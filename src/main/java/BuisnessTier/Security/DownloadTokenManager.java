@@ -1,4 +1,4 @@
-package BuisnessTier.Seciurity;
+package BuisnessTier.Security;
 
 import java.util.HashMap;
 import java.util.Map;

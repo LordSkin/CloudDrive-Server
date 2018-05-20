@@ -8,7 +8,7 @@ import DataTier.FolderSerializer;
 import DataTier.Logs.Logger;
 import DataTier.Logs.LoggerImpl;
 import PresentationTier.RestController;
-import BuisnessTier.Seciurity.DownloadTokenManager;
+import BuisnessTier.Security.DownloadTokenManager;
 import com.google.gson.Gson;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -26,7 +26,7 @@ import java.util.Map;
 /**
  * Factory cerating important objects in app
  */
-@SpringBootApplication(scanBasePackages = {"BuisnessTier", "PresentationTier", "BuisnessTier.Seciurity"}, scanBasePackageClasses = {AppController.class, RestController.class})
+@SpringBootApplication(scanBasePackages = {"BuisnessTier", "PresentationTier", "BuisnessTier.Security"}, scanBasePackageClasses = {AppController.class, RestController.class})
 public class CloudDriveServerApp {
 
 
