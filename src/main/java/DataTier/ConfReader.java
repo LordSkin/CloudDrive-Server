@@ -35,8 +35,8 @@ public class ConfReader {
         basePath = prefs.node("Settings").get("basePath", "SharedFolder");
         logFile = prefs.node("Settings").get("logFile", "logs.txt");
 
-        userName = prefs.node("BuisnessTier/Security").get("user", "user");
-        password = prefs.node("BuisnessTier/Security").get("password", "pass");
+        userName = prefs.node("Security").get("user", "user");
+        password = prefs.node("Security").get("password", "pass");
 
         if (!basePath.endsWith(File.separator)){
             basePath+=File.separator;

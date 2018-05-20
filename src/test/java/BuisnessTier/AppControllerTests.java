@@ -1,9 +1,9 @@
 package BuisnessTier;
 
+import BuisnessTier.Security.DownloadTokenManager;
 import DataTier.FileAcces.FileManager;
 import DataTier.FolderSerializer;
 import DataTier.Logs.Logger;
-import Seciurity.DownloadTokenManager;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -134,6 +134,11 @@ public class AppControllerTests {
     @Test(expected = NullPointerException.class)
     public void nullTestRename() {
         testObject.rename(null, null);
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void nullTokenTest() {
+        testObject.getToken(null);
     }
 
 }
