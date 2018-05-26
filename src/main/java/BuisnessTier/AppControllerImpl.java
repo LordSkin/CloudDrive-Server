@@ -83,7 +83,7 @@ public class AppControllerImpl implements AppController {
     public File getFile(String path, String token) throws FileNotFoundException {
         if(tokenManager.isTokenValid(path, token)){
             File result =  fileManager.getFile(pathDeserialize(path));
-            logger.logDownloadedFile(path);
+            logger.logDownloadedFile(pathDeserialize(path));
             return result;
         }
         else {

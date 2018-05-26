@@ -47,32 +47,32 @@ public class LoggerImpl implements Logger {
 
     @Override
     public void logAddedFile(String path) {
-        write("[" + dateFormat.format(new Date()) + "] File: " + getFileName(path) + " added to " + path);
+        write("[" + dateFormat.format(new Date()) + "] File: " + getFileName(path) + " added to " + getDirectory(path, getFileName(path)));
     }
 
     @Override
     public void logAddedFolder(String path) {
-        write("[" + dateFormat.format(new Date()) + "] Folder: " + getFileName(path) + " added to " + path);
+        write("[" + dateFormat.format(new Date()) + "] Folder: " + getFileName(path) + " added to " + getDirectory(path, getFileName(path)));
     }
 
     @Override
     public void logDeletedFile(String path) {
-        write("[" + dateFormat.format(new Date()) + "] File: " + getFileName(path) + " deleted from " + path);
+        write("[" + dateFormat.format(new Date()) + "] File: " + getFileName(path) + " deleted from " + getDirectory(path, getFileName(path)));
     }
 
     @Override
     public void logDeletedFolder(String path) {
-        write("[" + dateFormat.format(new Date()) + "] Folder: " + getFileName(path) + " deleted from " + path);
+        write("[" + dateFormat.format(new Date()) + "] Folder: " + getFileName(path) + " deleted from " + getDirectory(path, getFileName(path)));
     }
 
     @Override
     public void logDownloadedFile(String path) {
-        write("[" + dateFormat.format(new Date()) + "] File: " + getFileName(path) + " downloaded from " + path);
+        write("[" + dateFormat.format(new Date()) + "] File: " + getFileName(path) + " downloaded from " + getDirectory(path, getFileName(path)));
     }
 
     @Override
     public void logRenamed(String path, String newName) {
-        write("[" + dateFormat.format(new Date()) + "] element " + getFileName(path) + " from " + path + " renamed to " + newName);
+        write("[" + dateFormat.format(new Date()) + "] Element " + getFileName(path) + " from " + getDirectory(path, getFileName(path)) + " renamed to " + newName);
     }
 
     private String getFileName(String path) {
@@ -81,6 +81,17 @@ public class LoggerImpl implements Logger {
         int ind = path.lastIndexOf(File.separator);
         if (ind > 0) return path.substring(ind + 1);
         else return path;
+    }
+
+    private String getDirectory(String path, String fileName){
+        if(path.contains(fileName)){
+            int beginInd = path.indexOf(fileName);
+            String result =  path.substring(0, beginInd);
+            return result.length()>0 ? result : "Base folder";
+        }
+        else {
+            return path;
+        }
     }
 
     private void write(String s) {
