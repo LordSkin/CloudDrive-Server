@@ -125,6 +125,6 @@ public class AppControllerImpl implements AppController {
     }
 
     private String pathDeserialize(String path) {
-        return path.replace("&", File.separator).replace("%"," ");
+        return path.replace("&", File.separator).replace("ucode0020"," ");
     }
 }

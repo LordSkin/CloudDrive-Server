@@ -22,7 +22,7 @@ public class FolderSerializer {
 
     private String fileSeparator = "&";
 
-    private String space = "%";
+    private String space = "ucode0020";
 
     public FolderSerializer(Gson gson, String basePath, Map<String, FileType> extensionMap) {
         this.gson = gson;
@@ -39,7 +39,7 @@ public class FolderSerializer {
             String path = f.getAbsolutePath().replace(basePath,"").replace(File.separator, fileSeparator).replace(" ",space);
             if (f.isDirectory()) detailsList.add(new FileDetails(FileType.Folder, f.getName(), path));
             else
-                detailsList.add(new FileDetails(extensionMap.getOrDefault(getExtension(f.getName()), FileType.Other), f.getName(), path));
+                detailsList.add(new FileDetails(extensionMap.getOrDefault(getExtension(f.getName()), FileType.Other), f.getName().replace(" ",space), path));
         }
         return gson.toJson(detailsList);
     }
