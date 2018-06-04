@@ -29,6 +29,11 @@ public class ConfReader {
 
         extensionMap = new HashMap<String, FileType>();
 
+        File confFile = new File(fileName);
+        if (!confFile.exists()){
+            confFile.createNewFile();
+        }
+
         Ini ini = new Ini(new File(fileName));
         java.util.prefs.Preferences prefs = new IniPreferences(ini);
 
