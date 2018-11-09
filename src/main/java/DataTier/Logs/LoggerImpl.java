@@ -1,5 +1,7 @@
 package DataTier.Logs;
 
+import DataTier.DataModels.Event;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
@@ -45,34 +47,34 @@ public class LoggerImpl implements Logger {
     }
 
 
-    @Override
     public void logAddedFile(String path) {
         write("[" + dateFormat.format(new Date()) + "] File: " + getFileName(path) + " added to " + getDirectory(path, getFileName(path)));
     }
 
-    @Override
     public void logAddedFolder(String path) {
         write("[" + dateFormat.format(new Date()) + "] Folder: " + getFileName(path) + " added to " + getDirectory(path, getFileName(path)));
     }
 
-    @Override
     public void logDeletedFile(String path) {
         write("[" + dateFormat.format(new Date()) + "] File: " + getFileName(path) + " deleted from " + getDirectory(path, getFileName(path)));
     }
 
-    @Override
     public void logDeletedFolder(String path) {
         write("[" + dateFormat.format(new Date()) + "] Folder: " + getFileName(path) + " deleted from " + getDirectory(path, getFileName(path)));
     }
 
-    @Override
     public void logDownloadedFile(String path) {
         write("[" + dateFormat.format(new Date()) + "] File: " + getFileName(path) + " downloaded from " + getDirectory(path, getFileName(path)));
     }
 
-    @Override
     public void logRenamed(String path, String newName) {
         write("[" + dateFormat.format(new Date()) + "] Element " + getFileName(path) + " from " + getDirectory(path, getFileName(path)) + " renamed to " + newName);
+    }
+
+    @Override
+    public void logEvent(Event e) {
+
+
     }
 
     private String getFileName(String path) {

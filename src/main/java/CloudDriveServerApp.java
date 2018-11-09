@@ -1,15 +1,19 @@
 import BuisnessTier.AppController;
 import BuisnessTier.AppControllerImpl;
 import DataTier.ConfReader;
+import DataTier.DataModels.Event;
 import DataTier.DataModels.FileType;
 import DataTier.FileAcces.FileManager;
 import DataTier.FileAcces.FileManagerImpl;
 import DataTier.FolderSerializer;
 import DataTier.Logs.Logger;
 import DataTier.Logs.LoggerImpl;
+import DataTier.Logs.LoggerImplDataBase;
 import PresentationTier.RestController;
 import BuisnessTier.Security.DownloadTokenManager;
+import com.fasterxml.classmate.AnnotationConfiguration;
 import com.google.gson.Gson;
+import org.hibernate.cfg.Configuration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.multipart.MultipartResolver;
@@ -43,23 +47,23 @@ public class CloudDriveServerApp {
         File pathFile = new File(path);
         this.path = pathFile.getAbsolutePath();
         this.extensionMap = confReader.getExtensionMap();
-        this.user =  confReader.getUserName();
+        this.user = confReader.getUserName();
         this.password = confReader.getPassword();
 
     }
 
     @Bean
-    public AppController getAppController(){
+    public AppController getAppController() {
         return new AppControllerImpl();
     }
 
     @Bean
     public Logger getLogger() throws FileNotFoundException, UnsupportedEncodingException {
-        return new LoggerImpl(logFile);
+        return new LoggerImplDataBase(new Configuration().configure().addAnnotatedClass(Event.class).buildSessionFactory());
     }
 
     @Bean
-    public DownloadTokenManager getDownloadTokenManager(){
+    public DownloadTokenManager getDownloadTokenManager() {
         return new DownloadTokenManager();
     }
 
@@ -74,18 +78,18 @@ public class CloudDriveServerApp {
     }
 
     @Bean
-    public FileManager getFileManager(){
+    public FileManager getFileManager() {
         return new FileManagerImpl(path);
     }
 
     @Bean
     public FolderSerializer getFolderSerializer() throws FileNotFoundException {
-            return new FolderSerializer(new Gson(), path, extensionMap);
+        return new FolderSerializer(new Gson(), path, extensionMap);
     }
 
 
     @Bean
-    public MimetypesFileTypeMap getMimeTyPMap(){
+    public MimetypesFileTypeMap getMimeTyPMap() {
         MimetypesFileTypeMap result = new MimetypesFileTypeMap();
         result.addMimeTypes("application/pdf pdf");
         return result;

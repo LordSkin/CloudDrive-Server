@@ -1,5 +1,6 @@
 package BuisnessTier;
 
+import DataTier.DataModels.Event;
 import DataTier.FileAcces.FileManager;
 import DataTier.FolderSerializer;
 import DataTier.Logs.Logger;
@@ -50,7 +51,7 @@ public class AppControllerImpl implements AppController {
     public boolean addFile(MultipartFile file, String path) {
         try {
             fileManager.addFile(file, pathDeserialize(path));
-            logger.logAddedFile(pathDeserialize(path));
+            logger.logEvent(new Event(Event.ADDED, Event.FILE, pathDeserialize(path)));
             return true;
         }
         catch (IOException e) {
@@ -64,7 +65,7 @@ public class AppControllerImpl implements AppController {
     public boolean addDirectory(String path) {
         try {
             fileManager.addDirectory(pathDeserialize(path));
-            logger.logAddedFolder(pathDeserialize(path));
+            logger.logEvent(new Event(Event.ADDED, Event.DIR, pathDeserialize(path)));
             return true;
         }
         catch (IOException e) {
@@ -83,7 +84,7 @@ public class AppControllerImpl implements AppController {
     public File getFile(String path, String token) throws FileNotFoundException {
         if(tokenManager.isTokenValid(path, token)){
             File result =  fileManager.getFile(pathDeserialize(path));
-            logger.logDownloadedFile(pathDeserialize(path));
+            logger.logEvent(new Event(Event.DOWNLOADED, Event.FILE, pathDeserialize(path)));
             return result;
         }
         else {
@@ -96,7 +97,7 @@ public class AppControllerImpl implements AppController {
     public boolean delete(String path) {
         try {
             fileManager.delete(pathDeserialize(path));
-            logger.logDeletedFile(pathDeserialize(path));
+            logger.logEvent(new Event(Event.DELETED, Event.FILE, pathDeserialize(path)));
             return true;
         }
         catch (FileNotFoundException e) {
@@ -109,7 +110,7 @@ public class AppControllerImpl implements AppController {
     public boolean rename(String path, String newName) {
         try {
             fileManager.rename(pathDeserialize(path), newName);
-            logger.logRenamed(pathDeserialize(path),newName);
+            logger.logEvent(new Event(Event.RENAMED, Event.FILE, pathDeserialize(path), newName));
             return true;
         }
         catch (IOException e) {

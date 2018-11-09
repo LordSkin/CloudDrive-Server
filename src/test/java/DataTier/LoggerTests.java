@@ -16,7 +16,7 @@ import java.util.Date;
 
 public class LoggerTests {
 
-    private Logger testObject;
+    private LoggerImpl testObject;
 
     @Before
     public void prepare(){
