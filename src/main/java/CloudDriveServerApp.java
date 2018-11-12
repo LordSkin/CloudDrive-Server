@@ -5,13 +5,11 @@ import DataTier.DataModels.Event;
 import DataTier.DataModels.FileType;
 import DataTier.FileAcces.FileManager;
 import DataTier.FileAcces.FileManagerImpl;
-import DataTier.FolderSerializer;
+import DataTier.Serializer;
 import DataTier.Logs.Logger;
-import DataTier.Logs.LoggerImpl;
 import DataTier.Logs.LoggerImplDataBase;
 import PresentationTier.RestController;
 import BuisnessTier.Security.DownloadTokenManager;
-import com.fasterxml.classmate.AnnotationConfiguration;
 import com.google.gson.Gson;
 import org.hibernate.cfg.Configuration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -83,8 +81,8 @@ public class CloudDriveServerApp {
     }
 
     @Bean
-    public FolderSerializer getFolderSerializer() throws FileNotFoundException {
-        return new FolderSerializer(new Gson(), path, extensionMap);
+    public Serializer getFolderSerializer() throws FileNotFoundException {
+        return new Serializer(new Gson(), path, extensionMap);
     }
 
 

@@ -16,7 +16,7 @@ import java.util.Map;
 
 public class FileSerializerTests {
 
-    private FolderSerializer testObject;
+    private Serializer testObject;
 
     @Before
     public void prepare() {
@@ -27,14 +27,14 @@ public class FileSerializerTests {
         extensionMap.put("doc", FileType.TextFile);
         extensionMap.put("exe", FileType.Program);
 
-        testObject = new FolderSerializer(new Gson(),File.separator+"home"+File.separator+"test", extensionMap);
+        testObject = new Serializer(new Gson(),File.separator+"home"+File.separator+"test", extensionMap);
 
     }
 
     @Test
     public void nullTest() {
         try {
-            testObject.serialize(null);
+            testObject.serializeDir(null);
         }
         catch (NullPointerException e) {
             //OK
@@ -47,7 +47,7 @@ public class FileSerializerTests {
     @Test
     public void emptyTest() {
         try {
-            String result = testObject.serialize(new ArrayList<File>());
+            String result = testObject.serializeDir(new ArrayList<File>());
             Assert.assertEquals(result, "[]");
         }
         catch (Exception e) {
@@ -65,7 +65,7 @@ public class FileSerializerTests {
             Mockito.when(testFile.getAbsolutePath()).thenReturn(File.separator+"home"+File.separator+"test"+File.separator+"test1"+File.separator+"file"+File.separator+"testName");
             files.add(testFile);
 
-            String result = testObject.serialize(files);
+            String result = testObject.serializeDir(files);
 
             Assert.assertEquals(result, "[{\"fileType\":\"Folder\",\"name\":\"testName\",\"path\":\"\\u0026test1\\u0026file\\u0026testName\"}]");
         }
@@ -89,7 +89,7 @@ public class FileSerializerTests {
             files.add(testFile);
             files.add(testFile2);
 
-            String result = testObject.serialize(files);
+            String result = testObject.serializeDir(files);
 
             Assert.assertEquals(result, "[{\"fileType\":\"Folder\",\"name\":\"testName\",\"path\":\"\\u0026test1\\u0026file\\u0026testName\"},{\"fileType\":\"Other\",\"name\":\"testName2\",\"path\":\"\\u0026test1\\u0026file\\u0026testName2\"}]");
         }

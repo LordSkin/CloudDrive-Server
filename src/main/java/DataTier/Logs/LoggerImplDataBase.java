@@ -6,6 +6,9 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
+import org.hibernate.query.Query;
+
+import java.util.List;
 
 public class LoggerImplDataBase implements Logger {
 
@@ -27,5 +30,23 @@ public class LoggerImplDataBase implements Logger {
             ex.printStackTrace();
         }
 
+    }
+
+    @Override
+    public List<Event> getEvents(int limit) {
+        Transaction tx = null;
+        List<Event> result = null;
+        try (Session session = factory.openSession()) {
+            tx = session.beginTransaction();
+            Query q = session.createQuery("FROM Event E ORDER BY E.date DESC");
+            q.setMaxResults(limit);
+            result = q.list();
+            tx.commit();
+
+        } catch (HibernateException ex) {
+            ex.printStackTrace();
+            throw ex;
+        }
+        return result;
     }
 }

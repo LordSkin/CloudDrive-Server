@@ -1,5 +1,6 @@
 package DataTier;
 
+import DataTier.DataModels.Event;
 import DataTier.DataModels.FileDetails;
 import DataTier.DataModels.FileType;
 import com.google.gson.Gson;
@@ -12,7 +13,7 @@ import java.util.Map;
 /**
  * Serializing list of files to FileDetails, including recognision of fiel types
  */
-public class FolderSerializer {
+public class Serializer {
 
     private Gson gson;
 
@@ -24,14 +25,14 @@ public class FolderSerializer {
 
     private String space = "ucode0020";
 
-    public FolderSerializer(Gson gson, String basePath, Map<String, FileType> extensionMap) {
+    public Serializer(Gson gson, String basePath, Map<String, FileType> extensionMap) {
         this.gson = gson;
         this.basePath = basePath;
         this.extensionMap = extensionMap;
     }
 
 
-    public String serialize(List<File> files) {
+    public String serializeDir(List<File> files) {
 
 
         List<FileDetails> detailsList = new ArrayList<FileDetails>();
@@ -52,6 +53,10 @@ public class FolderSerializer {
             extension = fileName.substring(i + 1);
         }
         return extension;
+    }
+
+    public String serializeLogs(List<Event> events){
+        return gson.toJson(events);
     }
 
 

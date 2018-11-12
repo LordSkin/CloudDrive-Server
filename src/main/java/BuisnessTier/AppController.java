@@ -26,4 +26,6 @@ public interface AppController {
 
     String getToken(String path);
 
+    String getLogs();
+
 }

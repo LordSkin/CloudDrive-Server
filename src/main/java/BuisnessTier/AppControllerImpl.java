@@ -2,9 +2,10 @@ package BuisnessTier;
 
 import DataTier.DataModels.Event;
 import DataTier.FileAcces.FileManager;
-import DataTier.FolderSerializer;
+import DataTier.Serializer;
 import DataTier.Logs.Logger;
 import BuisnessTier.Security.DownloadTokenManager;
+import org.hibernate.HibernateException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -21,7 +22,7 @@ public class AppControllerImpl implements AppController {
 
     FileManager fileManager;
 
-    FolderSerializer serializer;
+    Serializer serializer;
 
     Logger logger;
 
@@ -43,7 +44,7 @@ public class AppControllerImpl implements AppController {
     }
 
     @Autowired
-    public void setSerializer(FolderSerializer serializer) {
+    public void setSerializer(Serializer serializer) {
         this.serializer = serializer;
     }
 
@@ -77,7 +78,7 @@ public class AppControllerImpl implements AppController {
     @Override
     public String getFolder(String path) throws FileNotFoundException {
         List<File> filesList = fileManager.getFilesList(pathDeserialize(path));
-        return serializer.serialize(filesList);
+        return serializer.serializeDir(filesList);
     }
 
     @Override
@@ -123,6 +124,11 @@ public class AppControllerImpl implements AppController {
     public String getToken(String path) {
         if (path==null) throw new NullPointerException();
         return tokenManager.getToken(path);
+    }
+
+    @Override
+    public String getLogs() throws HibernateException {
+        return serializer.serializeLogs(logger.getEvents(100));
     }
 
     private String pathDeserialize(String path) {

@@ -8,14 +8,12 @@ import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.*;
 
 /**
  * Implementation of Logger. Writes events to file selected by filename
  */
+@Deprecated
 public class LoggerImpl implements Logger {
 
 
@@ -75,6 +73,11 @@ public class LoggerImpl implements Logger {
     public void logEvent(Event e) {
 
 
+    }
+
+    @Override
+    public List<Event> getEvents(int limit) {
+        return null;
     }
 
     private String getFileName(String path) {

@@ -2,7 +2,7 @@ package BuisnessTier;
 
 import BuisnessTier.Security.DownloadTokenManager;
 import DataTier.FileAcces.FileManager;
-import DataTier.FolderSerializer;
+import DataTier.Serializer;
 import DataTier.Logs.Logger;
 import org.junit.Assert;
 import org.junit.Before;
@@ -13,7 +13,6 @@ import org.springframework.mock.web.MockMultipartFile;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.List;
 
 public class AppControllerTests {
 
@@ -37,7 +36,7 @@ public class AppControllerTests {
             e.printStackTrace();
         }
 
-        FolderSerializer serializer = Mockito.mock(FolderSerializer.class);
+        Serializer serializer = Mockito.mock(Serializer.class);
         DownloadTokenManager tokenManager = Mockito.mock(DownloadTokenManager.class);
         Mockito.when(tokenManager.isTokenValid(Mockito.any(), Mockito.any())).thenReturn(true);
         ((AppControllerImpl) testObject).setFileManager(fileManager);

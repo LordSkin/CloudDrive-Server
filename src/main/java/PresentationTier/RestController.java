@@ -2,6 +2,7 @@ package PresentationTier;
 
 import BuisnessTier.AppController;
 import BuisnessTier.AppControllerImpl;
+import org.hibernate.HibernateException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.core.io.InputStreamResource;
@@ -134,6 +135,20 @@ public class RestController {
         if (controller.rename(path, newName)) {
             return ResponseEntity.ok().build();
         } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @RequestMapping(value = "/logs/", method = RequestMethod.GET)
+    @ResponseBody
+    public ResponseEntity<String> getLogs(){
+        try {
+            String result = controller.getLogs();
+            return ResponseEntity.ok()
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .body(result);
+        } catch (HibernateException e) {
+            System.out.println("error reading logs");
             return ResponseEntity.notFound().build();
         }
     }
