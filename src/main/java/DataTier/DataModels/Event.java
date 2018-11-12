@@ -9,13 +9,11 @@ import java.util.Date;
 @Table(name = "events")
 public class Event {
 
-    public static final int ADDED = 0;
-    public static final int DELETED = 1;
-    public static final int RENAMED = 2;
+    public static final int ADDED_FILE = 0;
+    public static final int ADDED_DIR= 1;
+    public static final int DELETED = 2;
+    public static final int RENAMED = 3;
     public static final int DOWNLOADED = 3;
-
-    public static final int FILE = -1;
-    public static final int DIR = -2;
 
 
 
@@ -25,9 +23,6 @@ public class Event {
 
     @Column(name = "operation", nullable = false)
     private int operation;
-
-    @Column(name = "item", nullable = false)
-    private int item;
 
     @Column(name = "path", nullable = false)
     private String path;
@@ -41,26 +36,23 @@ public class Event {
     public Event() {
     }
 
-    public Event(int operation, int item, String path, String date, String newName, int id) {
+    public Event(int operation, String path, String date, String newName, int id) {
         this.operation = operation;
-        this.item = item;
         this.path = path;
         this.date = date;
         this.newName = newName;
         this.id = id;
     }
 
-    public Event(int operation, int item, String path, String newName) {
+    public Event(int operation, String path, String newName) {
         this.operation = operation;
-        this.item = item;
         this.path = path;
         this.newName = newName;
         this.date = (new SimpleDateFormat("dd/MM/yyyy HH:mm:ss")).format(new Date());
     }
 
-    public Event(int operation, int item, String path) {
+    public Event(int operation, String path) {
         this.operation = operation;
-        this.item = item;
         this.path = path;
         this.date = (new SimpleDateFormat("dd/MM/yyyy HH:mm:ss")).format(new Date());
     }
@@ -79,14 +71,6 @@ public class Event {
 
     public void setOperation(int operation) {
         this.operation = operation;
-    }
-
-    public int getItem() {
-        return item;
-    }
-
-    public void setItem(int item) {
-        this.item = item;
     }
 
     public String getPath() {
